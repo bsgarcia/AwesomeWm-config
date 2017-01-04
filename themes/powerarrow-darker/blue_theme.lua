@@ -9,24 +9,26 @@
 theme                               = {}
 
 themes_dir                          = os.getenv("HOME") .. "/.config/awesome/themes/powerarrow-darker"
-theme.wallpaper                     = "/home/random/.config/awesome/themes/obscur/backgrnd.jpg"
+theme.wallpaper                     = "/home/random/.config/awesome/themes/powerarrow-darker/blue_background.jpg"
 
 
-theme.useless_gap_width             =16
+theme.useless_gap_width             = 16
 theme.font                          = "Terminus 8"
 theme.fg_normal                     = "#DDDDFF"
-theme.fg_focus                      = "#416644"--#13927C"
+theme.fg_focus                      = "#2B4C4A"--#13927C"
 theme.fg_urgent                     = "#CC9393"
-theme.bg_normal                     = "#1a1a1a"
+theme.bg_normal                     = "#1A1A1A"
 theme.bg_focus                      = "#313131"
-theme.bg_urgent                     = "#1A1A1A"
+theme.bg_urgent                     = "#1a1a1a"
+theme.wibox_border_color            = "#1a1a1a"
+theme.wibox_border_width            = "2.2"
 theme.border_width                  = "2.2"
-theme.border_normal                 = "#1A1A1A"--"#1A1A1A"
-theme.border_focus                  = "#416644"--#739890"
+theme.border_normal                 = "#282828"--"#1A1A1A"
+theme.border_focus                  = "#2B4C4A"--#739890"
 theme.titlebar_bg_normal            = "#1A1A1A"
 theme.taglist_fg_focus              = "#DDDDFF"
-theme.tasklist_bg_focus             = "#1a1a1a"
-theme.tasklist_fg_focus             = "#416644"--"#13927C"
+theme.tasklist_bg_focus             = "1a1a1a"
+theme.tasklist_fg_focus             = "#2B4C4A"--"#13927C"
 theme.textbox_widget_margin_top     = 5 
 theme.notify_fg                     = theme.fg_normal
 theme.notify_bg                     = theme.bg_normal
@@ -38,8 +40,8 @@ theme.menu_height                   = "16"
 theme.menu_width                    = "140"
 
 theme.submenu_icon                  = themes_dir .. "/icons/submenu.png"
-theme.taglist_squares_sel           = themes_dir .. "/icons/square_sel.png"
-theme.taglist_squares_unsel         = themes_dir .. "/icons/square_unsel.png"
+theme.taglist_squares_sel           = themes_dir .. "/icons/blue_line_sel.png"
+theme.taglist_squares_unsel         = themes_dir .. "/icons/line_unsel.png"
 
 theme.layout_uselesstile            = themes_dir .. "/icons/tile.png"
 theme.layout_tilegaps               = themes_dir .. "/icons/tilegaps.png"
@@ -74,7 +76,7 @@ theme.widget_music                  = themes_dir .. "/icons/note.png"
 theme.widget_music_on               = themes_dir .. "/icons/note_on.png"
 theme.widget_vol                    = themes_dir .. "/icons/vol.png"
 theme.widget_vol_low                = themes_dir .. "/icons/vol_low.png"
-theme.micon_on                      = themes_dir .. "/icons/micon_on.png"
+theme.micon_on                      = themes_dir .. "/icons/micon_blue.png"
 theme.micon_off                      = themes_dir .. "/icons/micon_off.png"
 theme.widget_vol_no                 = themes_dir .. "/icons/vol_no.png"
 theme.widget_vol_mute               = themes_dir .. "/icons/vol_mute.png"
