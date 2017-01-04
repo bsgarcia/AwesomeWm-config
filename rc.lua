@@ -75,7 +75,7 @@ run_once("unclutter -root")
 -- {{{ Variable definitions
 
 -- beautiful init
-beautiful.init(os.getenv("HOME") .. "/.config/awesome/themes/powerarrow-darker/theme.lua.darker.lua")
+beautiful.init(os.getenv("HOME") .. "/.config/awesome/themes/powerarrow-darker/blue_theme.lua")
 
 -- common
 modkey     = "Mod4"
@@ -91,7 +91,7 @@ graphics   = "gimp"
 mail       = terminal .. " -e mutt "
 iptraf     = terminal .. " -g 180x54-20+34 -e sudo iptraf-ng -i all "
 musicplr   = terminal .. " -g 130x34-320+16 -e ncmpcpp "
-browser = "chromium"
+browser = "firefox"
 midori = "midori"
 light = "light"
 thunar = "thunar"
@@ -110,8 +110,6 @@ lvds_off = "xrandr --output LVDS1 --off"
 lvds_on = "xrandr --output LVDS1 --auto --primary"
 hdmi_off = "xrandr --output HDMI1 --off"
 hdmi_on = "xrandr --output HDMI1 --auto --primary"
-
-
 irssi = "urxvt -e /home/random/C_programs/irssi.sh"
 
 local layouts = {
@@ -164,8 +162,9 @@ end
 myawesomemenu = {
    { "> Manual", terminal .. " -e man awesome" },
    { "> Edit config", editor .. " " .. awesome.conffile },
-   { "> Edit theme", "gvim /home/random/.config/awesome/themes/powerarrow-darker/theme.lua.darker.lua" },
-   { "> Restart", awesome.restart },
+   { "> Edit theme", "gvim /home/random/.config/awesome/themes/powerarrow-darker/blue_theme.lua" },
+   { "> Switch theme", "theme-switcher"}, 
+   {"> Restart", awesome.restart },
    { "> Quit", awesome.quit },
    
 }
@@ -200,11 +199,7 @@ screens =  {{ "> HDMI  = ON", hdmi_on},
 mymainmenu = awful.menu.new({ items = { require("menugen").build_menu(),  
 { "Awesome", myawesomemenu },                                       
 { "Screens", screens},{ "Programs", used },{"System", system}, { "Logout", "oblogout"}},
-                              theme = { height = 16, width = 130 }})
-
-
-
-
+                        theme = { height = 16, width = 130 }})
 -- {{{ Wibox
 markup = lain.util.markup
 separators = lain.util.separators
@@ -436,8 +431,8 @@ netwidget = lain.widgets.net({
 spr = wibox.widget.textbox(' ')
 arrl = wibox.widget.imagebox()
 arrl:set_image(beautiful.arrl)
-arrl_dl = separators.arrow_left("#416644", "alpha")
-arrl_ld = separators.arrow_left("alpha", "#416644")
+arrl_dl = separators.arrow_left(beautiful.fg_focus, "alpha")
+arrl_ld = separators.arrow_left("alpha", beautiful.fg_focus)
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -519,8 +514,8 @@ for s = 1, screen.count() do
     mywibox[s] = awful.wibox({ position = "top", screen = s, height = 18, width = used_screen - 25})
     mywibox[s].x = 10 
     mywibox[s].y = 250
-    mywibox[s].border_color = "#1A1A1A"
-    mywibox[s].border_width = 2.5 
+    mywibox[s].border_color = beautiful.wibox_border_color
+    mywibox[s].border_width = beautiful.wibox_border_width
     mywibox[s].opacity = 1 
     
     -- Widgets that are aligned to the upper left
@@ -538,7 +533,7 @@ for s = 1, screen.count() do
         if right_layout_toggle then
             right_layout:add(arrl_ld)
             for i, n in pairs(arg) do
-                right_layout:add(wibox.widget.background(n , "#416644"))--beautiful.bg_focus))
+                right_layout:add(wibox.widget.background(n , beautiful.fg_focus))--beautiful.bg_focus))
             end
         else
             right_layout:add(arrl_dl)
@@ -764,7 +759,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "y", function () awful.util.spawn("xfce4-terminal") end),
 
     -- Prompt
-    awful.key({ modkey }, "r", function () awful.util.spawn('rofi -show run -fg "#B0E670" -hlbg "#B0E670" --lines 3 -fullscreen -bw 0 -padding 300') end))
+    awful.key({ modkey }, "r", function () awful.util.spawn('rofi -show run -fg "#B0E670" -hlbg "#B0E670" \
+                                                            --lines 3 -location 0 -yoffset -100') end))
     --awful.key({ modkey }, "Tab", function () awful.util.spawn("rofi -show window") end), 
     --awful.key({ modkey }, "r", function () mypromptbox[mouse.screen]:run() end),
     --[[awful.key({ modkey }, "x",]]
@@ -871,6 +867,9 @@ awful.rules.rules = {
                              } },
 
     { rule = { instance = "plugin-container" },
+          properties = { tag = tags[1][1] } },
+
+     { rule = {class = "Firefox"},
           properties = { tag = tags[1][1] } },
 
 
