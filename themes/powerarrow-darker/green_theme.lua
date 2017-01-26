@@ -43,6 +43,7 @@ theme.submenu_icon                  = themes_dir .. "/icons/submenu.png"
 theme.taglist_squares_sel           = themes_dir .. "/icons/green_line_sel.png"
 theme.taglist_squares_unsel         = themes_dir .. "/icons/line_unsel.png"
 
+
 theme.layout_uselesstile            = themes_dir .. "/icons/tile.png"
 theme.layout_tilegaps               = themes_dir .. "/icons/tilegaps.png"
 theme.layout_tileleft               = themes_dir .. "/icons/tileleft.png"

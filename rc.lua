@@ -1,7 +1,7 @@
 --[[
                                              
-     Powerarrow Darker Awesome WM config 2.0 
-     github.com/copycat-killer               
+     Random's green Awesome WM config 2.0 
+     github.com/getzneet    
                                              
 --]]
 
@@ -75,7 +75,7 @@ run_once("unclutter -root")
 -- {{{ Variable definitions
 
 -- beautiful init
-beautiful.init(os.getenv("HOME") .. "/.config/awesome/themes/powerarrow-darker/blue_theme.lua")
+beautiful.init(os.getenv("HOME") .. "/.config/awesome/themes/random/green_random.lua")
 
 -- common
 modkey     = "Mod4"
@@ -116,7 +116,6 @@ local layouts = {
     awful.layout.suit.floating,
     lain.layout.uselessfair,
     --lain.layout.centerwork,
-    --leaved.layout.suit.tile.right
     
 }
 -- }}}
@@ -125,7 +124,7 @@ path = "/home/random/Téléchargements/"
 
 -- {{{ Tags
 tags = {
-   names = { "web", "prog", "term", "file", "else"},
+   names = { "  ", "  ", "  ", "  ", "  "},
    layout = { layouts[1], layouts[1], layouts[1], layouts[1], layouts[1] },
    icons = {path .. "chrome.png", path .. "coding.png",path .. "terminal-sign.png",path .. "folders.png",path .. "chrome.png"}
 
@@ -162,7 +161,7 @@ end
 myawesomemenu = {
    { "> Manual", terminal .. " -e man awesome" },
    { "> Edit config", editor .. " " .. awesome.conffile },
-   { "> Edit theme", "gvim /home/random/.config/awesome/themes/powerarrow-darker/blue_theme.lua" },
+   { "> Edit theme", "gvim /home/random/.config/awesome/themes/random/green_random.lua" },
    { "> Switch theme", "theme-switcher"}, 
    {"> Restart", awesome.restart },
    { "> Quit", awesome.quit },
@@ -200,11 +199,15 @@ mymainmenu = awful.menu.new({ items = { require("menugen").build_menu(),
 { "Awesome", myawesomemenu },                                       
 { "Screens", screens},{ "Programs", used },{"System", system}, { "Logout", "oblogout"}},
                         theme = { height = 16, width = 130 }})
+
+
+
+
 -- {{{ Wibox
 markup = lain.util.markup
 separators = lain.util.separators
 
--- Textclock (with automatic launch of xflux to go easy on eyes at night)
+-- Textclock (with automatic launch of xflux to go easy on eyes at night + raspberry checker)
 clockicon = wibox.widget.imagebox(beautiful.widget_clock)
 --mytextclock = awful.widget.textclock(" %a %d %b  %H:%M")
  
@@ -212,23 +215,31 @@ mytextclock = lain.widgets.abase({
     timeout  = 30,
     cmd      = "date +'%a %d %b %R'",
     settings = function()
-        
         widget:set_text(" " .. output)
+        
+        -- XFLUX LAUNCHER
+        -- check if evening, then launch xflux
         str = string.match(output, "%d%d:")
         str = string.gsub(str, ":", "")
         if io.popen("pgrep xflux"):read() == nil then
                 if tonumber(str) >= 20 or tonumber(str) <= 7 then
                     run_once("xflux -l 44.8351 -g  -0.5686")
         end     end
-        
-        nb = 0
-        for x in io.popen("pgrep xdg-open"):lines() do
-            nb = nb+1
-            if nb >= 5 then
-                io.popen("killall -9 xdg-open")
-            end
-        end
-    end
+       
+       -- RASPBERRY PI CHECKER
+       --check if google.com is up, if it is, then it means that we are 
+       --connected to the internet, thus we check if raspberry pi is up. 
+       --[[if type(io.popen("curl --url http://google.com &"):read()) == "string" then]]
+           --if type(io.popen("curl --url http://canal5.fr &"):read()) == "string" then
+                --print("1")
+           --else
+                --io.popen("notify-send -i /home/random/.warning.png 'canal5.fr is down!'")
+           --end 
+       --else
+            --print("0")
+        --[[end]]
+    end 
+    
 })
 
 
@@ -248,7 +259,7 @@ function ()
     on_off = not on_off
     if on_off == true then 
         io.popen("rm /home/random/Python-exp/VoiceCommander/my_pid")
-        run_once("speech2")
+        run_once("speech")
         micon:set_image(beautiful.micon_on)
     else
         pid = io.popen("cat /home/random/Python-exp/VoiceCommander/my_pid")
@@ -292,10 +303,12 @@ mpdwidget = lain.widgets.mpd({
         if mpd_now.state == "play" then
             artist = " " .. mpd_now.artist .. " "
             title  = mpd_now.title  .. " "
-            mpdicon:set_image(beautiful.widget_music)
+            mpdicon:set_image(beautiful.widget_music_on)
         elseif mpd_now.state == "pause" then
             artist = "paused"
             title  = "paused "
+            mpdicon:set_image(beautiful.widget_music_on)
+
         else
             
             --if mpd is not running try to retrieve infos from cmus
@@ -306,7 +319,7 @@ mpdwidget = lain.widgets.mpd({
             --end 
             if type(artist) == "string" then 
                 title= io.popen("cmus-remote -Q | grep title | cut -d ' ' -f3-"):read()
-                mpdicon:set_image(beautiful.widget_music)
+                mpdicon:set_image(beautiful.widget_music_on)
             
             else 
                 artist = ""
@@ -315,7 +328,7 @@ mpdwidget = lain.widgets.mpd({
         end
         end
 
-        widget:set_markup(markup("#B4B4B4", artist))
+        widget:set_markup(markup(theme.fg_focus, artist))
     end
 })
 
@@ -429,10 +442,9 @@ netwidget = lain.widgets.net({
 
 -- Separators
 spr = wibox.widget.textbox(' ')
-arrl = wibox.widget.imagebox()
-arrl:set_image(beautiful.arrl)
-arrl_dl = separators.arrow_left(beautiful.fg_focus, "alpha")
-arrl_ld = separators.arrow_left("alpha", beautiful.fg_focus)
+--[[arrl:set_image(beautiful.arrl)]]
+--arrl_dl = separators.arrow_left(beautiful.fg_focus, "alpha")
+--arrl_ld = separators.arrow_left("alpha", beautiful.fg_focus)
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -511,12 +523,11 @@ for s = 1, screen.count() do
     used_screen = string.gsub(used_screen, "x", "")
     used_screen = tonumber(used_screen)
     
-    mywibox[s] = awful.wibox({ position = "top", screen = s, height = 18, width = used_screen - 25})
-    mywibox[s].x = 10 
-    mywibox[s].y = 250
+    mywibox[s] = awful.wibox({ position = "top", screen = s, height = 18, width = used_screen - 25 })
+    mywibox[s].x = 9 
     mywibox[s].border_color = beautiful.wibox_border_color
     mywibox[s].border_width = beautiful.wibox_border_width
-    mywibox[s].opacity = 1 
+    mywibox[s].opacity = 0.86 
     
     -- Widgets that are aligned to the upper left
     local left_layout = wibox.layout.fixed.horizontal()
@@ -531,12 +542,13 @@ for s = 1, screen.count() do
     local function right_layout_add (...)
         local arg = {...}
         if right_layout_toggle then
-            right_layout:add(arrl_ld)
+            right_layout:add(spr)
+
             for i, n in pairs(arg) do
-                right_layout:add(wibox.widget.background(n , beautiful.fg_focus))--beautiful.bg_focus))
+                right_layout:add(wibox.widget.background(n , "#1A1A1A"))--beautiful.bg_focus))
             end
         else
-            right_layout:add(arrl_dl)
+            right_layout:add(spr)
             for i, n in pairs(arg) do
                 right_layout:add(n)
             end
@@ -545,28 +557,32 @@ for s = 1, screen.count() do
     end
 
     right_layout = wibox.layout.fixed.horizontal()
-    right_layout:add(arrl)
+    --right_layout:add(arrl)
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     
-    right_layout:add(arrl)
     right_layout:add(spr)
     right_layout:add(micon)
     right_layout:add(spr)
     right_layout_add(mpdicon, mpdwidget)
+    right_layout:add(spr)
     right_layout_add(volicon, volumewidget)
+    right_layout:add(spr)
     right_layout_add(memicon, memwidget)
+    right_layout:add(spr)
     right_layout_add(cpuicon, cpuwidget)
+    right_layout:add(spr)
     --right_layout_add(tempicon, tempwidget)
     right_layout_add(fsicon, fswidget)
+    right_layout:add(spr)
     right_layout_add(baticon, batwidget)
-    right_layout_add(neticon,netwidget)
-    right_layout_add(mytextclock, spr)
+    right_layout:add(spr)
+    --right_layout_add(mytextclock, spr)
     right_layout_add(mylayoutbox[s])
 
     -- Now bring it all together (with the tasklist in the middle)
     local layout = wibox.layout.align.horizontal()
     layout:set_left(left_layout)
-    layout:set_middle(mytasklist[s])
+    layout:set_middle(mytextclock, spr)
     layout:set_right(right_layout)
     mywibox[s]:set_widget(layout)
 
@@ -978,12 +994,11 @@ end
 
 local bottom_layout = wibox.layout.fixed.horizontal()
 
---wibox = {}
+wibox = {}
 
---{ Moar wibox settings
+--{ Moar wibox settings]]
 for s = 1, screen.count() do
     mywibox[s].y = 6
-    --[[wibox[s] = awful.wibox({ position = "bottom", screen = s, height = 20, width = used_screen - (used_screen - 150)})]]
     --wibox[s].y = 735
     --wibox[s].x = 635
     --bottom_layout:add(mytaglist[s])

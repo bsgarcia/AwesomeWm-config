@@ -525,7 +525,6 @@ for s = 1, screen.count() do
     
     mywibox[s] = awful.wibox({ position = "top", screen = s, height = 18, width = used_screen - 25})
     mywibox[s].x = 10 
-    mywibox[s].y = 250
     mywibox[s].border_color = beautiful.wibox_border_color
     mywibox[s].border_width = beautiful.wibox_border_width
     mywibox[s].opacity = 1 
