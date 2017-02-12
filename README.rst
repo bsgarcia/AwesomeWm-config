@@ -1,5 +1,5 @@
 ===================
-Awesome WM Copycats + My custom theme (adapted from powerarrow-darker)
+Awesome WM Copycats + custom theme
 ===================
 
 --------------------------
@@ -20,6 +20,9 @@ A set of themes with the aim of making Awesome_ appearance awesome too!
 
 Gallery
 =======
+**Personal Theme (called random's theme in files)**
+
+.. image:: http://i.imgur.com/Hku6ldS.jpg
 
 **Multicolor** inspired by tip_
 
@@ -29,7 +32,7 @@ Gallery
 
 .. image:: http://dotshare.it/public/images/uploads/649.png
 
-**Powerarrow-Darker-Getzneet-version**
+**Powerarrow Darker custom green version**
 
 .. image:: http://www.hapshack.com/images/utNJD.png
 
