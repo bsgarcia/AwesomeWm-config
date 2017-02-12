@@ -258,11 +258,11 @@ micon:buttons(awful.util.table.join(awful.button({ }, 1,
 function () 
     on_off = not on_off
     if on_off == true then 
-        io.popen("rm /home/random/Python-exp/VoiceCommander/my_pid")
+        io.popen("rm /home/random/Python/VoiceCommander/my_pid")
         run_once("speech")
         micon:set_image(beautiful.micon_on)
     else
-        pid = io.popen("cat /home/random/Python-exp/VoiceCommander/my_pid")
+        pid = io.popen("cat /home/random/Python/VoiceCommander/my_pid")
         for i in pid:lines() do 
             io.popen("kill " .. i)
         end
@@ -602,7 +602,8 @@ globalkeys = awful.util.table.join(
     -- Take a screenshot
     -- https://github.com/copycat-killer/dots/blob/master/bin/screenshot
     awful.key({ altkey }, "p", function() os.execute("scrot") end),
-    awful.key( {altkey }, "s", function() awful.util.spawn_with_shell("xfce4-screenshooter -r -i") end),
+    awful.key( {altkey }, "s", function() awful.util.spawn_with_shell("xfce4-screenshooter -r -s /home/random/screens/") end),
+    awful.key( {altkey, "i" }, "s", function() awful.util.spawn_with_shell("xfce4-screenshooter -r -i") end),
 
     -- Tag browsing
     awful.key({ modkey }, "Left",   awful.tag.viewprev       ),
